@@ -1,5 +1,5 @@
 <!-- Edit user Modal -->
-<div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalTitle" aria-hidden="true">
+<div class="modal fade" id="preciosModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <!-- Header -->
@@ -69,73 +69,9 @@
                             </div>
                             <!-- End Form Group -->
 
-                            <!-- Form Group -->
-                            <div class="row form-group">
-                                <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Celular</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="js-masked-input form-control" id="celular" name="celular" placeholder="(000)000-0000" aria-label="(000)000-0000"
-                                           data-hs-mask-options='{
-                           "template": "(000)000-0000"
-                         }' autocomplete="off">
-                                </div>
-                            </div>
-                            <!-- End Form Group -->
-
-                            
-                            <hr>
-                            <h3 id="example" class="hs-docs-heading">
-                                Credenciales
-                            </h3>
-                            <!-- Form Group -->
-                            <div class="row form-group">
-                                <label for="editEmailModalLabel" class="col-sm-2 col-form-label input-label">Email</label>
-
-                                <div class="col-sm-4">
-                                    <div class="js-form-message">
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="CORREO ELECTRÓNICO (OBLIGATORIO)" required data-msg="Ingresa el correo electronico." autocomplete="off">
-                                    </div>
-                                </div>
-
-                                <label for="editEmailModalLabel" class="col-sm-2 col-form-label input-label">Contraseña</label>
-
-                                <div class="col-sm-4">
-                                    <div class="js-form-message">
-                                        <input type="password" class="form-control" name="password_plain" id="password_plain" placeholder="CONTRASEÑA (OBLIGATORIO)" required data-msg="Ingresa la contraseña." autocomplete="off">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Form Group -->
-
-                            <hr>
-                            <h3 id="example" class="hs-docs-heading">
-                                Permisos
-                            </h3>
-                            <div class="col-sm">
-                                <!-- Form Group -->
-                                <span class="d-block mb-2">Permisos de uso de la plataforma.</span>
-                                <!-- Form Group -->
-                                <div class="row form-group">
-                                    <label for="editEmailModalLabel" class="col-sm-2 col-form-label input-label">Rol</label>
-
-                                    <div class="col-sm-10 js-form-message">
-                                        <select class="js-select2-custom custom-select" size="1" style="opacity: 0;"
-                                                data-hs-select2-options='{
-                                                "minimumResultsForSearch": "Infinity",
-                                                "placeholder": "SELECCIONE (OBLIGATORIO)"
-                                                }' required data-msg="Seleccione un rol." id="rol" name="rol">
-                                            <option label="empty"></option>
-
-                                        </select>
-                                        <!-- End Select -->
-                                    </div>
-                                </div>
-                                <!-- End Form Group -->
-                            </div>
-
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-success" value="Submit" id="submit"> <i class="tio-done"></i> Guardar</button>&nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-white mr-2" data-dismiss="modal" aria-label="Close"> <i class="tio-clear"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-success snd" data-url="{{ url('hotelPrecio')}}"> <i class="bi bi-check-lg"></i> Guardar</button>&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-white mr-2" data-dismiss="modal" aria-label="Close"> <i class="bi bi-x-lg"></i> Cancelar</button>
                             </div>
                         </form>
                     </div>

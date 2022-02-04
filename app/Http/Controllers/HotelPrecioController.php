@@ -14,7 +14,7 @@ class HotelPrecioController extends Controller
      */
     public function index()
     {
-        //
+        return view('hotel.tipo_habitaciones.index');
     }
 
     /**
@@ -81,5 +81,9 @@ class HotelPrecioController extends Controller
     public function destroy(hotel_precio $hotel_precio)
     {
         //
+    }
+
+    public function list(){
+        
     }
 }

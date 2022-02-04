@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-sm-auto">
-                <button class="btn btn-primary add" data-action="agregar">
+                <button class="btn btn-primary add" data-action="preciosModal">
                     <i class="bi bi-plus mr-1"></i> Agregar
                 </button>
             </div>
@@ -120,50 +120,16 @@
 </div>
 <!-- End Content -->
 
-@include('hotel.tipo_habitacion.modal')
+@include('hotel.tipo_habitaciones.modal')
 <!-- ========== END SECONDARY CONTENTS ========== -->
 
 <script src="{{ config('app.plugins') }}script.js"></script>
 <!-- JS Plugins Init. -->
 <script>
-    $.each(cat.rol, function(index, value) {
-        $('#rol').append('<option value="'+ value.id +'">'+ value.nombre+'</option>');
-    });
 
     // initialization of datatables
     var datatable = $.HSCore.components.HSDatatables.init($('#datatable'), {
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'copy',
-                className: 'd-none'
-            },
-            {
-                extend: 'excel',
-                className: 'd-none'
-            },
-            {
-                extend: 'csv',
-                className: 'd-none'
-            },
-            {
-                extend: 'pdf',
-                className: 'd-none'
-            },
-            {
-                extend: 'print',
-                className: 'd-none'
-            },
-        ],
-        select: {
-            style: 'multi',
-            selector: 'td:first-child input[type="checkbox"]',
-            classMap: {
-                checkAll: '#datatableCheckAll',
-                counter: '#datatableCounter',
-                counterInfo: '#datatableCounterInfo'
-            }
-        },
+       
         language: {
             zeroRecords: '<div class="text-center p-4">' +
                 '<img class="mb-3" src="{{ config('app.svg') }}illustrations/sorry.svg" alt="Image Description" style="width: 7rem;">' +
@@ -194,24 +160,24 @@
             }
         },{
             data: 'id',
-            render: function(data, type) { return '<button class="btn btn-sm btn-primary add" data-action="edit" data-id="'+data+'"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-danger rmv" data-id="'+data+'" data-action="{{ url('usuarios') }}/' + data + '"> <i class="bi bi-trash"></i></button>'; }
-        }
-        ]
-    });
-
-    $('body').off('click','.add').on('click',".add", function(event){
-        $("#UserModal").modal('show');
-        clear($("#UserModal"));
+            render: function(data, type) { 
+                return `<button class="btn btn-sm btn-primary add" data-action="preciosModal" data-id="${data}" data-url="{{ url('hotelPrecio')}}/${data}/edit"><i class="bi bi-pencil-square"></i></button> 
+                <button class="btn btn-sm btn-danger rmv" data-id="${data}" data-url="{{ url('hotelPrecio') }}/${data}"> <i class="bi bi-trash"></i></button>`; 
+                }
+        }]
     });
 
     $("table").on("click","button.add",function(){
-        $("#UserModal").modal('show');
-        $('#UserModal').find('form').trigger('reset');
+        var Open =  $("#"+$(this).data('action'));
+        var Url =  $(this).data('url');
+        var modal = $(this).data('action');
+        clear(Open);
         var id = $(this).data('id');
+        $('#' + $(this).data('action') + ' #id_paciente').val(id);
 
         $.ajax({
             type: "get",
-            url: "{{ url('usuarios') }}/"+id+'/edit',
+            url: Url,
             beforeSend: function(){
                 loading();
             },
@@ -222,7 +188,7 @@
                     } else if(index === 'id_agencia') {
                         $('#id_agencia').val(value).trigger('change');
                     }
-                    $('#'+index+'').val(value);
+                    $('#'+index).val(value);
                 });
                 loading_close();
             },
@@ -236,6 +202,7 @@
 
     $("table").on("click","button.rmv",function(){
         var current_object = $(this);
+        var url = $(this).data('url');
         Swal.fire({
             title: '¿Desea eliminar?',
             text: "Si elimina este registro no se podrá recuperar",
@@ -247,7 +214,7 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.value) {
-                var action = current_object.attr('data-action');
+                var action = url;
                 var token = jQuery('meta[name="csrf-token"]').attr('content');
                 var id = current_object.attr('data-id');
 
@@ -279,18 +246,17 @@
         })
     });
 
-    $('body').off('click','#submit').on('click', '#submit', function (event) {
-        var form = $("#userdata");
-        var rol = $("#rol").val();
-        if( rol == 13 || rol == 14) {
-            if ($('#id_agencia').attr('required')) $('#id_agencia').removeAttr('required');
-        }else{
-            if (!($('#id_agencia').attr('required'))) $('#id_agencia').attr("required", true);
-        }
+    $('body').off('click','.snd').on('click', '.snd', function (event) {
+        event.preventDefault()
+
+        var form = $("#"+$(this).parents('form').attr('id')+"");
+        var modal = $("#"+$(this).parents('.modal').attr('id')+"");
+        var mod = $(this).parents('.modal').attr('id');
+        var url = $(this).data('url');
+
         if(form.valid()){
-            event.preventDefault()
             $.ajax({
-                url: '{{ route('usuarios.store') }}',
+                url: url,
                 type: "POST",
                 data: form.serialize(),
                 dataType: 'json',
@@ -298,18 +264,20 @@
                     loading();
                 },
                 success: function (data) {
+                    loading_close();
                     if(data.respuesta) {
-                        $("#UserModal").modal('hide');
+                        modal.modal('hide');
                         toastr.success( data.mensaje );
                         datatable.ajax.reload();
                     }
-                    loading_close();
                 },
                 error: function (data) {
                     loading_close();
                     error(data);
                 }
             });
+        }else{
+            error('Revise el formulario, por favor revise el formulario, faltan algunos datos por llenar')
         }
 
     });
@@ -346,16 +314,4 @@
 
     });
 
-    // $('#rol').on('change', function() {
-    //     var id = this.value;
-    //     if(id == '13' || id == '14'){
-    //         $('.agen').hide();
-    //         $('#id_agencia').val('').trigger('change')
-    //         $('#id_agencia').prop('require',false)
-    //     }else {
-    //         $('.agen').show();
-    //         $('#id_agencia').val('').trigger('change')
-    //         $('#id_agencia').prop('require',true)
-    //     }
-    // });
 </script>

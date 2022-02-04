@@ -37,4 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CATALOGOS
     Route::get('catalogos', 'HelperController@catalogos')->name('catalogos');
+    
+     /// USUARIOS
+     Route::resource('hotelPrecio', 'HotelPrecioController')->name('hotelPrecio','*');
+     Route::get('preciosList', 'HotelPrecioController@list')->name('preciosList');
 });
