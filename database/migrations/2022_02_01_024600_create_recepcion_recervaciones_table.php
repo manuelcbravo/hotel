@@ -21,7 +21,7 @@ class CreateRecepcionRecervacionesTable extends Migration
             $table->longtext('detalle');
             $table->integer('id_cuarto');
             $table->integer('estatus');
-            $table->tinyInteger('pagado')->default('0')->('0 for not payed, 1 for payed');
+            $table->tinyInteger('pagado')->default('0')->comment('0 for not payed, 1 for payed');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -13,7 +13,7 @@ class CreateHotelHitacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('hotel_hitaciones', function (Blueprint $table) {
+        Schema::create('hotel_habitaciones', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->integer('numero');
@@ -36,6 +36,6 @@ class CreateHotelHitacionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hotel_hitaciones');
+        Schema::dropIfExists('hotel_habitaciones');
     }
 }

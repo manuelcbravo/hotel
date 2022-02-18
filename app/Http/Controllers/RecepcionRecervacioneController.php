@@ -14,7 +14,7 @@ class RecepcionRecervacioneController extends Controller
      */
     public function index()
     {
-        //
+        return view('recepcion.reservaciones.index');
     }
 
     /**
@@ -81,5 +81,9 @@ class RecepcionRecervacioneController extends Controller
     public function destroy(recepcion_recervacione $recepcion_recervacione)
     {
         //
+    }
+
+    public function list(){
+
     }
 }

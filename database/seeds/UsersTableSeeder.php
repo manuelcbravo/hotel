@@ -21,8 +21,7 @@ class UsersTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'nombre' => 'Fiel',
-                'ap_paterno' => 'Group',
-                'ap_materno' => 'MX',
+                'apellidos' => 'Group',
                 'genero' => 1,
                 'fecha_nacimiento' => '1997-10-05',
                 'telefono' => NULL,

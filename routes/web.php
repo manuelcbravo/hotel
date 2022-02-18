@@ -35,6 +35,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('usuarios', 'UsersController')->name('usuarios','*');
     Route::get('usuarioslist', 'UsersController@usuariosList')->name('usuarioslist');
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CONFIGURACION
+    /// MI CUENTA
+    Route::resource('recep_reservaciones', 'RecepcionRecervacioneController')->name('recep_reservaciones','*');
+    Route::get('reservacionesList', 'RecepcionRecervacioneController@list')->name('reservacionesList');
+    /// USUARIOS
+    Route::resource('usuarios', 'UsersController')->name('usuarios','*');
+    Route::get('usuarioslist', 'UsersController@usuariosList')->name('usuarioslist');
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CATALOGOS
     Route::get('catalogos', 'HelperController@catalogos')->name('catalogos');
     

@@ -24,14 +24,16 @@
     <link rel="stylesheet" href="{{ mix('css/vendor.css') }}">
     <link rel="stylesheet" href="{{ mix('css/theme.css') }}?v=1.1">
     <link rel="stylesheet" href="{{ mix('css/docs.css') }}">
-
+    <link rel="stylesheet" href="{{ mix('css/icon-set.css') }}">
 
     <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="{{ mix('css/sweetalert2.css') }}?v=1.1">
     <link rel="stylesheet" href="{{ mix('css/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css?v=0.1') }}">
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.10.2/main.min.css' rel='stylesheet' />
     @routes
     @stack('css')
 </head>
@@ -70,6 +72,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
 
 <script src="https://kit.fontawesome.com/93c9ada402.js" crossorigin="anonymous"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.10.2/main.min.js'></script>
 
 <script>
     $(document).on('input', 'input[type=text]', function(){
@@ -105,17 +108,13 @@
         var Open =  $("#"+$(this).data('action')+"");
         clear(Open);
         Open.modal('show');
-        $("#id").val('');
     });
 
     ///CLEAR MODAL
     function clear(modal){
-        //modal.find('form').trigger("reset");
-        //$(".custom-select").val('').trigger('change');
-        //$(".is-invalid").removeClass("is-invalid");
-        //$(".is-valid").removeClass("is-valid");
         form = modal.find('form');
-        form.trigger("reset");
+        form[0].reset();
+        form.find('input[type=hidden]').val('');
         form.find('.custom-select').val('').trigger('change');
         form.find('.is-invalid').removeClass("is-invalid");
         form.find('.is-valid').removeClass("is-valid");
@@ -143,6 +142,11 @@
     ///TEXT CASH
     function dinero(txt){
         return (txt)? parseFloat(txt).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : 'N/A' ;
+    }
+
+    /// TEXT DINERO 0
+    function dinero_dash(txt){
+        return (txt)? parseFloat(txt).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : '0.00' ;
     }
 
     ///TEXT FECHA
@@ -183,7 +187,7 @@
             respuesta = 'Sesión terminada'
             document.getElementById('logout-form').submit();
         }else{
-            respuesta = (mesage)? mesage.responseText : 'Algo salio mal, intente mas tarde.'
+            respuesta = (mesage)? ((mesage.responseText)? mesage.responseText : mesage ) : 'Algo salio mal, intente mas tarde.'
         }
 
         Swal.fire({
@@ -196,9 +200,84 @@
     ///CONVERT SIZES IN BYTES TO KB, MB, GB
     function formatBytes(a,b=2,k=1024){with(Math){let d=floor(log(a)/log(k));return 0==a?"0 Bytes":parseFloat((a/pow(k,d)).toFixed(max(0,b)))+" "+["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"][d]}}
 
+/// LIST DOCUMENTOS
+function documentos_list(data){
+        $("#documentos_content").empty();
+
+        if (data.length > 0){
+            $('#documentos_content').append(`
+                <div class="card mb-3 mb-lg-5 mt-4 mt-lg-5">
+                    <!-- Header -->
+                    <div class="card-header">
+                        <h4 class="card-header-title">Documentos <span class="badge badge-soft-dark rounded-circle ml-1">` + data.length + `</span></h4>
+                    </div>
+                    <!-- End Header -->
+
+                    <!-- Body -->
+                    <div class="card-body card-body-height" id="documentos_list">
+                    </div>
+                    <!-- Body -->
+                </div>
+            `);
+            $.each(data, function (index, value) {
+                var fecha;
+
+                if (!value.fecha){
+                    fecha = value.created_at;
+                } else {
+                    fecha = value.fecha
+                }
+
+                var img = (value.extension === 'pdf' || value.extension === 'docx' || value.extension === 'xlsx' || value.extension === 'pptx') ? value.extension : "img";
+
+                $('#documentos_list').append(`
+                <li class="list-group-item">
+                    <div class="row align-items-center gx-2">
+                        <div class="col-auto">
+                            <img class="avatar avatar-xs avatar-4by3" src="{{ config('app.svg') }}brands/` + img + `.svg" alt="PDF">
+                        </div>
+                        <div class="col">
+                            <h5 class="mb-0">
+                                <a class="text-dark">` + value.nombre + `</a>
+                            </h5>
+                            <ul class="list-inline list-separator small">
+                                <li class="list-inline-item">Creado: ` + moment(fecha).format('DD/MM/YYYY') + `</li>
+                                <li class="list-inline-item">` + formatBytes(value.tamano) + `</li>
+                            </ul>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-sm btn-white dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Acciones
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                <button class="dropdown-item">
+                                    <i class="bi bi-cloud-download pr-2"></i>
+                                    <a href="{{ config('app.doc_pacientes') }}` + value.direccion + `" download="` + value.nombre + `">
+                                        Descargar
+                                    </a>
+                                </button>
+                                <button class="dropdown-item text-danger rmv" data-id="`+value.id+`" data-tipo="1"  data-url="` + route('documentos_paciente.destroy', value.id) + `">
+                                    <i class="bi bi-trash pr-2"></i>
+                                    Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            `)
+            });
+        }
+    }
+
     ///RUTAS
     function RUTA(id, ruta, id_destino, id_origen){
-        var RUTA = ((!!id_destino && !!id_origen)? route(ruta, {id: id_destino, id2: id_origen}) : route(ruta+'.index'));
+        var RUTA
+
+        if(!!id_destino && !!id_origen) {
+            RUTA = route(ruta, {id: id_destino, id2: id_origen})
+        } else {
+            RUTA = route(ruta+'.index')
+        }
 
         $.ajax({
             url: RUTA,
@@ -214,7 +293,9 @@
                 $('#spinner_content').hide();
                 $("#main_content").fadeIn();
 
-                if(id_destino && id_origen){
+                if(!!id_destino && !!id_origen){
+
+                }else{
                     var link = document.getElementById('nav-link-'+ruta);
                     $(".nav-jet-link").removeClass("active");
                     link.className += " active";
