@@ -6,13 +6,13 @@
         <div class="row align-items-end">
             <div class="col-sm mb-2 mb-sm-0">
             
-                <h1 class="page-header-title">Usuarios</h1>
+                <h1 class="page-header-title">Hotel</h1>
             </div>
 
             <div class="col-sm-auto">
-                <button class="btn btn-primary add" data-action="preciosModal">
+                <!-- <button class="btn btn-primary add" data-action="preciosModal">
                     <i class="bi bi-plus mr-1"></i> Agregar
-                </button>
+                </button> -->
             </div>
         </div>
         <!-- End Row -->
@@ -36,26 +36,40 @@
 <!-- JS Plugins Init. -->
 <script>
 
-document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      timeZone: 'UTC',
-      initialView: 'resourceTimelineDay',
-      aspectRatio: 1.5,
-      headerToolbar: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
-      },
-      editable: true,
-      resourceAreaHeaderContent: 'Rooms',
-      resources: 'https://fullcalendar.io/api/demo-feeds/resources.json?with-nesting&with-colors',
-      events: 'https://fullcalendar.io/api/demo-feeds/events.json?single-day&for-resource-timeline'
+        initialDate: moment().format('YYYY-MM-DD'),
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        locale: 'es',
+        initialView: 'resourceTimelineMonth',
+        aspectRatio: 1.5,
+        headerToolbar: {
+            left: 'prev,next',
+            center: 'title',
+            right: null
+        },
+        editable: false,
+        selectable: true,
+        resourceAreaHeaderContent: 'Habitaciones',
+        resourceOrder: 'title',
+        resources: 'https://fullcalendar.io/api/demo-feeds/resources.json?with-nesting&with-colors',
+        events: 'https://fullcalendar.io/api/demo-feeds/events.json?single-day&for-resource-timeline',
+        slotLabelFormat: [{
+            weekday: 'long',
+            day: 'numeric'
+        }],
+        weekends: false,
+        select: function(event) {
+            console.log(event)
+        },
+        eventClick: function(event) {
+            console.log(event)
+        }
     });
 
     calendar.render();
-  });
+  
 
     $('body').off('click','.add').on('click',".add", function(event){
         var Open =  $("#"+$(this).data('action'));

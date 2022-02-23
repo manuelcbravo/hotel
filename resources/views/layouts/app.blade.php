@@ -293,9 +293,7 @@ function documentos_list(data){
                 $('#spinner_content').hide();
                 $("#main_content").fadeIn();
 
-                if(!!id_destino && !!id_origen){
-
-                }else{
+                if(!id_destino && !id_origen){
                     var link = document.getElementById('nav-link-'+ruta);
                     $(".nav-jet-link").removeClass("active");
                     link.className += " active";

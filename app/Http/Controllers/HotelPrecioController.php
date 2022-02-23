@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\hotel_precio;
 use Illuminate\Http\Request;
 
+use Auth;
+use DB;
+
 class HotelPrecioController extends Controller
 {
     /**
@@ -35,7 +38,29 @@ class HotelPrecioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id_p = hotel_precio::updateOrCreate(
+            [
+                'id' => $request->id
+            ],
+            $request->except(['id'])
+        )->id;
+
+
+        if ($request->id) {
+            $mensaje = 'Registro actualizado correctamente';
+            \Notificaciones::agregarLog('Contacto actualizado', $id_p, $id_p, 'pacientes');
+        } else {
+            $mensaje = 'Registro creado correctamente';
+            \Notificaciones::agregarLog('Contacto registrado', $id_p, $id_p, 'pacientes');
+        }
+
+
+        return response()->json(
+            [
+                'respuesta' => true,
+                'mensaje' => $mensaje
+            ]
+        );
     }
 
     /**
@@ -80,10 +105,18 @@ class HotelPrecioController extends Controller
      */
     public function destroy(hotel_precio $hotel_precio)
     {
-        //
+        $id_contacto = paciente::withTrashed()->find($id);
+        $id_contacto ->delete();
+       \Notificaciones::agregarLog('Tipo de habitacion eliminado correctamente', $id, $id, "tipo_habitacion");
+        return response()->json([
+            'status' => true,
+        ], 200);
     }
 
     public function list(){
-        
+
+        return response()->json([
+            'data' => hotel_precio::get()
+        ]);
     }
 }

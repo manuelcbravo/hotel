@@ -83,7 +83,15 @@ class RecepcionRecervacioneController extends Controller
         //
     }
 
-    public function list(){
-
+    public function habitaciones(){
+        return response()->json([
+            'data' => 'rooms'
+        ]);
+    }
+    
+    public function reservaciones(){
+        return response()->json([
+            'data' => 'reservaciones'
+        ]);
     }
 }

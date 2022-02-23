@@ -24,7 +24,7 @@
                                     <ul class="js-navbar-vertical-aside-submenu nav nav-sub">
                                         @foreach ($item->submenu as $subitem)
                                         <li class="nav-item">
-                                            <a class="nav-link nav-jet-link" href="#" data-action="{{ $subitem->ruta }}" title="{{ $subitem->nombre }}">
+                                            <a class="nav-link nav-jet-link" id="nav-link-{{ $subitem->ruta }}" href="#" data-action="{{ $subitem->ruta }}" title="{{ $subitem->nombre }}">
                                                 <span class="bi bi-circle-fill nav-indicator-icon"></span>
                                                 <span class="text-truncate">{{ $subitem->nombre }}</span>
                                             </a>

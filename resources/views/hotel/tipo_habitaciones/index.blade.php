@@ -6,11 +6,11 @@
         <div class="row align-items-end">
             <div class="col-sm mb-2 mb-sm-0">
             
-                <h1 class="page-header-title">Usuarios</h1>
+                <h1 class="page-header-title">Tipo habitaciones</h1>
             </div>
 
             <div class="col-sm-auto">
-                <button class="btn btn-primary add" data-action="preciosModal">
+                <button class="btn btn-primary add" data-action="tipoHabitacionModal">
                     <i class="bi bi-plus mr-1"></i> Agregar
                 </button>
             </div>
@@ -136,7 +136,7 @@
                 '<p class="mb-0">No hay información para mostrar</p>' +
                 '</div>'
         },
-        ajax: '{{ route('usuarioslist') }}',
+        ajax: '{{ route('preciosList') }}',
         columns: [{
             render: function ( data, type, row ) {
                 return '<div class="d-flex align-items-center"><div class="avatar avatar-soft-primary avatar-circle">'+

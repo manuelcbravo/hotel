@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class MenuParentChildrenTableSeeder extends Seeder
+class MenuParentChildrenSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -98,5 +98,6 @@ class MenuParentChildrenTableSeeder extends Seeder
                 'order' => 2,
             ),
         ));
+        
     }
 }
