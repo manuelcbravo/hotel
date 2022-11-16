@@ -1,46 +1,98 @@
 <x-app-layout :active="$active">
-    <x-layout.page>
-        <x-slot name="titulo"> Usuarios</x-slot>
-        <x-slot name="boton">
+<div class="content container-fluid">
+    <div class="page-header pb-3">
+    <div class="row align-items-center">
+        <div class="col-sm">
+            <h1 class="page-header-title">Usuarios</h1>
+        </div>
+        <div class="col-sm-auto">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalUsuarios">
-                <i class="bi-plus mr-1"></i> Agregar
+            <i class="bi-plus mr-1"></i> Agregar
             </button>
-        </x-slot>
-
-        <x-slot name="indicadores"> </x-slot>
-        <x-slot name="cuerpo">
-            <x-layout.card-table idEntries="datatableEntries" idPagination="datatablePagination">
-                <x-slot name="header">
-                    <x-layout.table-header id="datatableSearch"></x-layout.table-header>
-                </x-slot>
-                <x-slot name="header2"> </x-slot>
-                <x-slot name="table">
-                    <x-layout.table id="datatable" options='{
-                   "order": [],
-                    "info": {
-                    "totalQty": "#datatableWithPaginationInfoTotalQty"
-                    },
-                    "search": "#datatableSearch",
-                    "entries": "#datatableEntries",
-                    "pageLength": 12,
-                    "pagination": "datatablePagination"
-                    }'>
-                        <x-slot name="headers">
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Rol</th>
-                            <th>Activo/inactivo</th>
-                            <th>Acciones</th>
-                        </x-slot>
-                    </x-layout.table>
-                </x-slot>
-            </x-layout.card-table>
-        </x-slot>
-        <x-slot name="modals">
-            @include('pages.config.users.modal_add')
-        </x-slot>
-
-    </x-layout.page>
+        </div>
+    </div>
+    </div>
+    <div>
+    <div class="card">
+    <!-- Header -->
+    <div class="card-header card-header-content-md-between">
+        <div class="mb-2 mb-md-0">
+            <!-- Search -->
+            <div class="input-group input-group-merge input-group-flush">
+                <div class="input-group-prepend input-group-text">
+                <i class="bi-search"></i>
+                </div>
+                <input id="datatableSearch" type="search" class="form-control" placeholder="Buscar" aria-label="Search users">
+            </div>
+            <!-- End Search -->
+        </div>
+    </div>
+    <!-- End Header -->
+    <!-- Table -->
+    <div class="table-responsive datatable-custom">
+        <table id="datatable" class="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table" style="width: 100%"
+            data-hs-datatables-options='{
+            &quot;order&quot;: [],
+            &quot;info&quot;: {
+            &quot;totalQty&quot;: &quot;#datatableWithPaginationInfoTotalQty&quot;
+            },
+            &quot;search&quot;: &quot;#datatableSearch&quot;,
+            &quot;entries&quot;: &quot;#datatableEntries&quot;,
+            &quot;pageLength&quot;: 12,
+            &quot;pagination&quot;: &quot;datatablePagination&quot;
+            }'>
+            <thead class="thead-light">
+                <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Activo/inactivo</th>
+                <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <!-- End Table -->
+    <!-- Footer -->
+    <div class="card-footer">
+        <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+            <div class="col-sm mb-2 mb-sm-0">
+                <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                <span class="me-2">Mostrando:</span>
+                <!-- Select -->
+                <div class="tom-select-custom">
+                    <select id="datatableEntries" class="js-select form-select form-select-borderless w-auto" autocomplete="off" data-hs-tom-select-options='{
+                        "searchInDropdown": false,
+                        "hideSearch": true
+                        }'>
+                        <option value="12" selected>12</option>
+                        <option value="14">14</option>
+                        <option value="16">16</option>
+                        <option value="18">18</option>
+                    </select>
+                </div>
+                <!-- End Select -->
+                <span class="text-secondary me-2">de</span>
+                <!-- Pagination Quantity -->
+                <span id="datatableWithPaginationInfoTotalQty"></span>
+                </div>
+            </div>
+            <!-- End Col -->
+            <div class="col-sm-auto">
+                <div class="d-flex justify-content-center justify-content-sm-end">
+                <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+                </div>
+            </div>
+            <!-- End Col -->
+        </div>
+        <!-- End Row -->
+    </div>
+    <!-- End Footer -->
+    </div>
+</div>
+@include('pages.config.users.modal_add')
 @push('js')
     <script>
         $(document).ready(function(){
