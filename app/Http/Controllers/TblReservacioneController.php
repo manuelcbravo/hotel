@@ -14,7 +14,7 @@ class TblReservacioneController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.calendario.reservaciones.index',  ['active' => 'reservaciones']);
     }
 
     /**

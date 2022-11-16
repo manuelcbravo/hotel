@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Calendario
     Route::resource('hospedaje', TblHospedajeController::class)->name('hospedaje', '*');
-    Route::resource('reservaciones', TblReservacionesController::class)->name('reservaciones', '*');
+    Route::resource('reservaciones', TblReservacioneController::class)->name('reservaciones', '*');
 
     Route::post('/save-token', 'HelperController@saveToken')->name('save-token');
     Route::get('/send_notification/{id}', 'HelperController@sendNotification')->name('send_notification');
