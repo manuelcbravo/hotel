@@ -36,6 +36,27 @@
                         </div>
                     </div>
                     <div class="nav-item">
+                        <a class="nav-link dropdown-toggle {{ ($activePage == 'hospedaje' || $activePage == 'reservaciones')? '': 'collapsed'}}" href="#navbarVerticalMenuPagesUsersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUsersMenu" aria-expanded=" {{ ($activePage == 'usuarios')? 'true': 'false'}}" aria-controls="navbarVerticalMenuPagesUsersMenu">
+                            <i class="bi-calendar-date nav-icon"></i>
+                            <span class="nav-link-title">Calendario</span>
+                        </a>
+                        <div id="navbarVerticalMenuPagesUsersMenu" class="nav-collapse collapse  {{ ($activePage == 'hospedaje' || $activePage == 'reservaciones')? 'show': ''}}" data-bs-parent="#navbarVerticalMenuPagesMenu">
+                            <a class="nav-link {{ ($activePage == 'hospedaje')? 'active': ''}}" href="{{ route('hospedaje.index') }}">Hospedaje</a>
+                            <a class="nav-link {{ ($activePage == 'reservaciones')? 'active': ''}}" href="{{ route('reservaciones.index') }}">Reservaciones</a>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-item">
+                        <a class="nav-link dropdown-toggle {{ ($activePage == 'hospedaje' || $activePage == 'reservaciones')? '': 'collapsed'}}" href="#navbarVerticalMenuPagesUsersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUsersMenu" aria-expanded=" {{ ($activePage == 'usuarios')? 'true': 'false'}}" aria-controls="navbarVerticalMenuPagesUsersMenu">
+                            <i class="bi-hospital nav-icon"></i>
+                            <span class="nav-link-title">Hotel</span>
+                        </a>
+                        <div id="navbarVerticalMenuPagesUsersMenu" class="nav-collapse collapse  {{ ($activePage == 'hospedaje' || $activePage == 'reservaciones')? 'show': ''}}" data-bs-parent="#navbarVerticalMenuPagesMenu">
+                            <a class="nav-link {{ ($activePage == 'hospedaje')? 'active': ''}}" href="{{ route('hospedaje.index') }}">Habitaciones</a>
+                            <a class="nav-link {{ ($activePage == 'reservaciones')? 'active': ''}}" href="{{ route('reservaciones.index') }}">Tipo de habitaciones</a>
+                        </div>
+                    </div>
+                    <div class="nav-item">
                         <a class="nav-link dropdown-toggle {{ ($activePage == 'usuarios' || $activePage == 'perfil')? '': 'collapsed'}}" href="#navbarVerticalMenuPagesUsersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUsersMenu" aria-expanded=" {{ ($activePage == 'usuarios')? 'true': 'false'}}" aria-controls="navbarVerticalMenuPagesUsersMenu">
                             <i class="bi-gear nav-icon"></i>
                             <span class="nav-link-title">Configuración</span>

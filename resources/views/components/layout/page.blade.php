@@ -12,6 +12,5 @@
     <div>
         {{ $indicadores ?? '' }}
         {{ $cuerpo }}
-        {{ $modals ?? '' }}
     </div>
 </div>

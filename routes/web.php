@@ -28,6 +28,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('usersL', 'UsersController@getUsuarios');
     Route::get('catalogos', 'HelperController@getCatalogos');
 
+    // Calendario
+    Route::resource('hospedaje', TblHospedajeController::class)->name('hospedaje', '*');
+    Route::resource('reservaciones', TblReservacionesController::class)->name('reservaciones', '*');
+
     Route::post('/save-token', 'HelperController@saveToken')->name('save-token');
     Route::get('/send_notification/{id}', 'HelperController@sendNotification')->name('send_notification');
     Route::get('/notificaciones/{id}', 'HelperController@getNotificaciones')->name('notificaciones');
